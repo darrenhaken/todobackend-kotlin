@@ -11,5 +11,7 @@ object Config {
 }
 
 fun main(args: Array<String>) {
+    if (args.isNotEmpty()) Config.root=args[0]
+
     SpringApplication.run(Application::class.java, *args)
 }
