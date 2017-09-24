@@ -1,10 +1,12 @@
 buildscript {
 	ext {
 		kotlinVersion = '1.1.50'
-		springBootVersion = '1.5.7.RELEASE'
+		springBootVersion = '2.0.0.M3'
 	}
 	repositories {
 		mavenCentral()
+        maven { url 'http://repo.spring.io/snapshot' }
+        maven { url 'http://repo.spring.io/milestone' }
 	}
 	dependencies {
 		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
@@ -24,26 +26,29 @@ version = '0.0.1-SNAPSHOT'
 sourceCompatibility = 1.8
 compileKotlin {
 	kotlinOptions.jvmTarget = "1.8"
+	compiler.incremental = true
 }
 compileTestKotlin {
 	kotlinOptions.jvmTarget = "1.8"
+	compiler.incremental = true
 }
 
 repositories {
 	mavenCentral()
+    maven { url "http://repo.spring.io/snapshot" }
+    maven { url "http://repo.spring.io/milestone" }
 }
 
-
 dependencies {
-	compile('org.springframework.boot:spring-boot-starter-actuator')
-	compile('org.springframework.boot:spring-boot-starter-data-jpa')
+	compile 'org.springframework.boot:spring-boot-starter-actuator'
+	compile 'org.springframework.boot:spring-boot-starter-data-jpa'
 	compile('org.springframework.boot:spring-boot-starter-web') {
         exclude module: "spring-boot-starter-tomcat"
     }
     compile "org.springframework.boot:spring-boot-starter-jetty"
-    compile("org.jetbrains.kotlin:kotlin-stdlib-jre8:${kotlinVersion}")
-	compile("org.jetbrains.kotlin:kotlin-reflect:${kotlinVersion}")
-	runtime('org.springframework.boot:spring-boot-devtools')
-	runtime('com.h2database:h2')
-	testCompile('org.springframework.boot:spring-boot-starter-test')
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jre8:${kotlinVersion}"
+	compile "org.jetbrains.kotlin:kotlin-reflect:${kotlinVersion}"
+	runtime 'org.springframework.boot:spring-boot-devtools'
+	runtime 'com.h2database:h2'
+	testCompile 'org.springframework.boot:spring-boot-starter-test'
 }

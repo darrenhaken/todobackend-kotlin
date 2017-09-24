@@ -9,7 +9,7 @@ class TodoController {
 
     val counter = AtomicLong()
 
-    @GetMapping("/greeting")
-    fun greeting() = Todo(counter.incrementAndGet(), "Hello")
+    @GetMapping("/todo")
+    fun getTodo() = Todo(counter.incrementAndGet(), "Hello")
 
 }
