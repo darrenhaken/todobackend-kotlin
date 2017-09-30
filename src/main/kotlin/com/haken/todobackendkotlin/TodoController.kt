@@ -6,9 +6,6 @@ import java.util.concurrent.atomic.AtomicLong
 
 data class Todo(var id: Int = 0, var title: String = "", var completed: Boolean = false, var order: Int = -1) {
     @Suppress("unused")
-    constructor() : this(0)
-
-    @Suppress("unused")
     val url: String
         get() = "${Config.root}/$id"
 }
@@ -18,7 +15,8 @@ data class Todo(var id: Int = 0, var title: String = "", var completed: Boolean 
 class TodoController {
 
     val counter = AtomicInteger()
-    val todos = HashMap<Int, Todo>()
+
+    var todos = emptyMap<Int, Todo>().toMutableMap()
 
     @GetMapping("/")
     fun getAll() = todos.values.toList()
@@ -26,8 +24,10 @@ class TodoController {
     @PostMapping("/")
     fun createTodo(@RequestBody todo: Todo): Todo {
         val id = counter.incrementAndGet()
-        val createdTodo: Todo = todo.copy(id = id)
+        val createdTodo = todo.copy(id = id)
+
         todos[id] = createdTodo
+
         return createdTodo
     }
 
@@ -45,6 +45,7 @@ class TodoController {
         if (!todos.contains(id)) return null
 
         val old = todos[id]!!
+
         if (!todo.title.isEmpty()) old.title = todo.title
         if (todo.completed) old.completed = true
         if (todo.order > -1) old.order = todo.order
